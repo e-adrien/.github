@@ -1,0 +1,93 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Default preset for use with Les Jours repos",
+  "extends": ["config:best-practices", ":semanticCommits"],
+  "timezone": "Europe/Paris",
+  "schedule": ["before 4:00 am on the first day of the month"],
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["after 4:00 am and before 9:00 am on Monday"],
+    "automerge": true,
+    "automergeType": "branch",
+    "automergeStrategy": "squash"
+  },
+  "assignees": ["e-adrien"],
+  "automergeType": "branch",
+  "commitBodyTable": true,
+  "configMigration": true,
+  "dependencyDashboard": true,
+  "prCreation": "not-pending",
+  "rebaseWhen": "behind-base-branch",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchDatasources": ["npm", "packagist", "dart"],
+      "abandonmentThreshold": "2 years"
+    },
+    {
+      "description": "Require dashboard approval for major updates",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Require approval for @tsconfig/node replacements",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["@tsconfig/node*"],
+      "matchUpdateTypes": ["replacement"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Automerge non-major & pin updates",
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "pinDigest",
+        "digest",
+        "lockFileMaintenance"
+      ],
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["packagist"],
+      "matchPackageNames": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major packagist dependencies",
+      "groupSlug": "packagist-all-minor-patch",
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major npm dependencies",
+      "groupSlug": "npm-all-minor-patch",
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["dart"],
+      "matchPackageNames": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major dart dependencies",
+      "groupSlug": "dart-all-minor-patch",
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["maven", "gradle-version"],
+      "matchPackageNames": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major gradle dependencies",
+      "groupSlug": "gradle-all-minor-patch",
+      "automerge": false
+    },
+    {
+      "matchDatasources": ["pod"],
+      "matchPackageNames": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "all non-major pod dependencies",
+      "groupSlug": "pod-all-minor-patch",
+      "automerge": false
+    }
+  ]
+}
